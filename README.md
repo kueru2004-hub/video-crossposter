@@ -1,4 +1,4 @@
-# 動画同時投稿ツール v1.2.2
+# 動画同時投稿ツール v1.2.3
 
 YouTube Data APIとTikTok Content Posting APIを使う個人用Webツールです。
 
