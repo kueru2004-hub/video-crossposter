@@ -1,1 +1,1 @@
-{"name":"video-crossposter","version":"1.2.3","private":true,"type":"module","scripts":{"start":"node --env-file-if-exists=.env server.mjs","check":"node --check server.mjs"}}
+{"name":"video-crossposter","version":"1.2.4","private":true,"type":"module","scripts":{"start":"node --env-file-if-exists=.env server.mjs","check":"node --check server.mjs"}}

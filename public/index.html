@@ -41,7 +41,16 @@
 
       <div class="grid">
         <label>YouTube公開範囲<select id="yp"><option value="private">非公開</option><option value="unlisted">限定公開</option><option value="public">公開</option></select></label>
-        <label>YouTube予約日時<input id="ya" type="datetime-local"></label>
+        <label>YouTube予約日時
+          <span class="schedule-controls">
+            <input id="ya" type="datetime-local">
+            <button type="button" id="scheduleNow">現在時刻</button>
+            <span class="hour-stepper" aria-label="予約時刻を1時間単位で変更">
+              <button type="button" id="scheduleHourUp" aria-label="1時間後">▲</button>
+              <button type="button" id="scheduleHourDown" aria-label="1時間前">▼</button>
+            </span>
+          </span>
+        </label>
       </div>
       <label>YouTube再生リスト<select id="pl"><option value="">追加しない</option></select></label>
 
