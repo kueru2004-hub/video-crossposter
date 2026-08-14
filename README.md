@@ -1,4 +1,4 @@
-# 動画同時投稿ツール v1.2.4
+# Video Crossposter v1.2.5
 
 YouTube Data APIとTikTok Content Posting APIを使う個人用Webツールです。
 
