@@ -1,4 +1,4 @@
-# Video Crossposter v1.2.5
+# Video Crossposter v1.2.6
 
 YouTube Data APIとTikTok Content Posting APIを使う個人用Webツールです。
 
