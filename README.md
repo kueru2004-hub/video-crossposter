@@ -1,9 +1,10 @@
-# Video Crossposter v1.2.6
+# Video Crossposter v1.2.7
 
 YouTube Data APIとTikTok Content Posting APIを使う個人用Webツールです。
 
 1. `.env.example`を`.env`へ複製し、両サービスのOAuth認証情報を入力します。
-2. `npm start`を実行し、`http://localhost:3000`を開きます。
-3. 両アカウントを接続し、MP4・タイトル・説明文・公開範囲を選んで投稿します。
+2. `npm start`を実行し、公式サイト `http://localhost:3000` を開きます。
+3. `http://localhost:3000/app` から投稿ツールを開きます。
+4. 両アカウントを接続し、MP4・タイトル・説明文・公開範囲を選んで投稿します。
 
 リダイレクトURLは `http://localhost:3000/auth/youtube/callback` と `http://localhost:3000/auth/tiktok/callback` です。本番では`APP_URL`をHTTPSの公開URLへ変更します。
