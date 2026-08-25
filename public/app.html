@@ -24,6 +24,12 @@
     <form id="f">
       <label>動画<input id="v" type="file" accept="video/mp4,video/quicktime,video/webm" required></label>
       <video id="preview" controls hidden></video>
+      <div id="frameThumbnailControls" class="frame-thumbnail-controls" hidden>
+        <p>動画をサムネにしたい場面で停止してから押してください。</p>
+        <button type="button" id="captureThumbnailFrame">現在の場面をサムネにする</button>
+        <canvas id="thumbnailFramePreview" hidden></canvas>
+        <p id="thumbnailFrameStatus" aria-live="polite"></p>
+      </div>
       <label>タイトル<input id="t" maxlength="100" required></label>
       <label>説明文・ハッシュタグ<textarea id="d" rows="5"></textarea></label>
 
@@ -54,9 +60,9 @@
         </label>
       </div>
       <label>YouTube再生リスト<select id="pl"><option value="">追加しない</option></select></label>
-      <label>YouTubeサムネイル画像（任意）
+      <label>別のサムネイル画像を使う場合（任意）
         <input id="yth" type="file" accept="image/jpeg,image/png">
-        <small>JPGまたはPNG・2MB以下。YouTube投稿完了後に自動設定します。</small>
+        <small>JPGまたはPNG・2MB以下。動画から選んだ場面よりこちらを後から選ぶと、画像ファイルを使用します。</small>
       </label>
 
       <div id="tiktokSettings" class="tiktok-card">
