@@ -26,9 +26,13 @@
       <video id="preview" controls hidden></video>
       <div id="frameThumbnailControls" class="frame-thumbnail-controls" hidden>
         <p>動画をサムネにしたい場面で停止してから押してください。</p>
-        <button type="button" id="captureThumbnailFrame">現在の場面をサムネにする</button>
+        <div class="frame-thumbnail-actions">
+          <button type="button" id="captureThumbnailFrame">現在の場面をサムネにする</button>
+          <button type="button" id="downloadThumbnailFrame" hidden>サムネ画像を保存</button>
+        </div>
         <canvas id="thumbnailFramePreview" hidden></canvas>
         <p id="thumbnailFrameStatus" aria-live="polite"></p>
+        <p class="notice">YouTubeショートで自動反映されない場合は、保存した画像をパソコン版YouTube Studioから設定してください。</p>
       </div>
       <label>タイトル<input id="t" maxlength="100" required></label>
       <label>説明文・ハッシュタグ<textarea id="d" rows="5"></textarea></label>
