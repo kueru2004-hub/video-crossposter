@@ -1,4 +1,6 @@
-# Video Crossposter v1.2.12
+# Video Crossposter v1.2.13
+
+投稿成功後は動画、タイトル、説明文、サムネイル、予約日時、公開範囲・同意などを初期化します。投稿先の選択、接続、保存済みタグセット、投稿履歴と直前の投稿URLは残します。再生リストは既定の「原神」（存在しなければ追加しない）に戻します。エラー・一部失敗・TikTok処理中の場合は入力を残します。
 
 YouTube Data APIとTikTok Content Posting APIを使う個人用Webツールです。
 

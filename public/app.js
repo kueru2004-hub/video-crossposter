@@ -42,7 +42,32 @@ $('#scheduleNow').onclick=setScheduleToCurrentHour;
 $('#scheduleHourUp').onclick=()=>changeScheduleHour(1);
 $('#scheduleHourDown').onclick=()=>changeScheduleHour(-1);
 $('#copyYoutubeUrl').onclick=copyYoutubeUrl;
-$('#f').onsubmit=async event=>{event.preventDefault();const file=$('#v').files[0],title=$('#t').value,description=$('#d').value,targets=[...document.querySelectorAll('[name=x]:checked')].map(x=>x.value),out={};$('#youtubeResult').hidden=true;if(!targets.length)return $('#r').textContent='エラー: 投稿先を選択してください';try{if(targets.includes('youtube')){const localPublishAt=$('#ya').value,publishAt=localPublishAt?new Date(localPublishAt).toISOString():'';out.youtube=await youtube(file,title,description,$('#yp').value,publishAt,$('#pl').value,selectedThumbnailFile||$('#yth').files[0]);showYoutubeResult(out.youtube.url);saveYoutubeHistory(title,out.youtube.url)}if(targets.includes('tiktok')){if(!$('#tiktokConsent').checked)throw Error('TikTokへの投稿内容を確認し、同意欄をチェックしてください');const mode=$('#tm').value;let info=creatorInfo,duration=0;if(mode==='direct'){info=await loadCreator();if(!$('#tp').value)throw Error('TikTokの公開範囲を選択してください');duration=selectedDuration||await getDuration(file);if(duration>info.max_video_post_duration_sec)throw Error('このTikTokアカウントへ投稿できる動画は最大'+info.max_video_post_duration_sec+'秒です');if($('#commercial').checked&&!$('#ownBrand').checked&&!$('#branded').checked)throw Error('宣伝内容が自社か第三者ブランドかを選択してください');if($('#branded').checked&&$('#tp').value==='SELF_ONLY')throw Error('第三者ブランドとのタイアップは「自分のみ」では投稿できません')}const caption=(title+'\n'+description).trim();if(caption.length>2200)throw Error('TikTokのタイトルと説明文は合計2200文字以内にしてください');out.tiktok=await tiktok(file,caption,{mode,duration,privacy:$('#tp').value,allowComment:$('#allowComment').checked,allowDuet:$('#allowDuet').checked,allowStitch:$('#allowStitch').checked,ownBrand:$('#commercial').checked&&$('#ownBrand').checked,branded:$('#commercial').checked&&$('#branded').checked,isAigc:$('#aigc').checked})}$('#r').textContent=JSON.stringify(out,null,2)}catch(error){$('#r').textContent='エラー: '+error.message}};
+function resetPostForm(){
+  // Keep destination choices: resetting HTML defaults could re-enable TikTok.
+  const targets=[...document.querySelectorAll('[name=x]')].map(input=>[input,input.checked]);
+  $('#f').reset();
+  for(const [input,checked] of targets)input.checked=checked;
+  $('#pl').value=[...$('#pl').options].find(option=>option.textContent.trim()==='原神')?.value||'';
+  const video=$('#preview');
+  video.pause();
+  video.onloadedmetadata=null;
+  video.removeAttribute('src');
+  video.load();
+  video.hidden=true;
+  if(previewUrl)URL.revokeObjectURL(previewUrl);
+  previewUrl='';
+  selectedDuration=0;
+  selectedThumbnailFile=null;
+  const canvas=$('#thumbnailFramePreview');
+  canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+  canvas.hidden=true;
+  $('#frameThumbnailControls').hidden=true;
+  $('#downloadThumbnailFrame').hidden=true;
+  $('#thumbnailFrameStatus').textContent='';
+  directMode();
+  commercialMode();
+}
+$('#f').onsubmit=async event=>{event.preventDefault();const file=$('#v').files[0],title=$('#t').value,description=$('#d').value,targets=[...document.querySelectorAll('[name=x]:checked')].map(x=>x.value),out={};$('#youtubeResult').hidden=true;if(!targets.length)return $('#r').textContent='エラー: 投稿先を選択してください';try{if(targets.includes('youtube')){const localPublishAt=$('#ya').value,publishAt=localPublishAt?new Date(localPublishAt).toISOString():'';out.youtube=await youtube(file,title,description,$('#yp').value,publishAt,$('#pl').value,selectedThumbnailFile||$('#yth').files[0]);showYoutubeResult(out.youtube.url);saveYoutubeHistory(title,out.youtube.url)}if(targets.includes('tiktok')){if(!$('#tiktokConsent').checked)throw Error('TikTokへの投稿内容を確認し、同意欄をチェックしてください');const mode=$('#tm').value;let info=creatorInfo,duration=0;if(mode==='direct'){info=await loadCreator();if(!$('#tp').value)throw Error('TikTokの公開範囲を選択してください');duration=selectedDuration||await getDuration(file);if(duration>info.max_video_post_duration_sec)throw Error('このTikTokアカウントへ投稿できる動画は最大'+info.max_video_post_duration_sec+'秒です');if($('#commercial').checked&&!$('#ownBrand').checked&&!$('#branded').checked)throw Error('宣伝内容が自社か第三者ブランドかを選択してください');if($('#branded').checked&&$('#tp').value==='SELF_ONLY')throw Error('第三者ブランドとのタイアップは「自分のみ」では投稿できません')}const caption=(title+'\n'+description).trim();if(caption.length>2200)throw Error('TikTokのタイトルと説明文は合計2200文字以内にしてください');out.tiktok=await tiktok(file,caption,{mode,duration,privacy:$('#tp').value,allowComment:$('#allowComment').checked,allowDuet:$('#allowDuet').checked,allowStitch:$('#allowStitch').checked,ownBrand:$('#commercial').checked&&$('#ownBrand').checked,branded:$('#commercial').checked&&$('#branded').checked,isAigc:$('#aigc').checked})}$('#r').textContent=JSON.stringify(out,null,2);if(!out.tiktok||['PUBLISH_COMPLETE','SEND_TO_USER_INBOX'].includes(out.tiktok.status))resetPostForm()}catch(error){$('#r').textContent='エラー: '+error.message}};
 const defaultTags={name:'原神',text:'#原神\n#GenshinImpact\n#shorts'};
 const savedTags=()=>JSON.parse(localStorage.getItem('crossposterTagSets')||'[]');
 function addTagText(text){const current=$('#d').value.trimEnd();$('#d').value=(current+(current?'\n':'')+text).trim()}
