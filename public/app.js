@@ -19,6 +19,7 @@ async function captureThumbnailFrame(){const video=$('#preview'),canvas=$('#thum
 function thumbnailDownloadName(){const video=$('#v').files[0],base=($('#t').value.trim()||(video?video.name.replace(/\.[^.]+$/,''):'thumbnail')).replace(/[<>:"/\\|?*\u0000-\u001f]/g,'_');return(base||'thumbnail')+'-thumbnail.jpg'}
 function downloadThumbnailFrame(){if(!selectedThumbnailFile)throw Error('先に動画からサムネにする場面を選択してください');const url=URL.createObjectURL(selectedThumbnailFile),link=document.createElement('a');link.href=url;link.download=thumbnailDownloadName();document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$('#thumbnailFrameStatus').textContent+='　画像を保存しました'}
 function localDateTimeValue(date){const pad=value=>String(value).padStart(2,'0');return date.getFullYear()+'-'+pad(date.getMonth()+1)+'-'+pad(date.getDate())+'T'+pad(date.getHours())+':'+pad(date.getMinutes())}
+function setDefaultSchedule(){const now=new Date(),date=new Date(now);date.setHours(18,30,0,0);if(date<=now)date.setDate(date.getDate()+1);$('#ya').value=localDateTimeValue(date)}
 function setScheduleToCurrentHour(){const date=new Date();date.setMinutes(30,0,0);$('#ya').value=localDateTimeValue(date)}
 function changeScheduleHour(amount){const input=$('#ya'),date=input.value?new Date(input.value):new Date();if(!input.value)date.setMinutes(30,0,0);date.setHours(date.getHours()+amount);input.value=localDateTimeValue(date)}
 function changeScheduleDay(amount){const input=$('#ya'),date=input.value?new Date(input.value):new Date();if(!input.value)date.setMinutes(30,0,0);date.setDate(date.getDate()+amount);input.value=localDateTimeValue(date)}
@@ -49,6 +50,7 @@ function resetPostForm(){
   // Keep destination choices: resetting HTML defaults could re-enable TikTok.
   const targets=[...document.querySelectorAll('[name=x]')].map(input=>[input,input.checked]);
   $('#f').reset();
+  setDefaultSchedule();
   for(const [input,checked] of targets)input.checked=checked;
   $('#pl').value=[...$('#pl').options].find(option=>option.textContent.trim()==='原神')?.value||'';
   const video=$('#preview');
@@ -76,4 +78,4 @@ const savedTags=()=>JSON.parse(localStorage.getItem('crossposterTagSets')||'[]')
 function addTagText(text){const current=$('#d').value.trimEnd();$('#d').value=(current+(current?'\n':'')+text).trim()}
 function renderTags(){const area=$('#tagButtons');area.textContent='';for(const item of [defaultTags,...savedTags()]){const button=document.createElement('button');button.type='button';button.textContent=item.name;button.onclick=()=>addTagText(item.text);area.append(button)}}
 $('#saveTags').onclick=()=>{const name=$('#tagName').value.trim(),text=$('#tagText').value.trim().replaceAll(' ','\n');if(!name||!text)return;const sets=savedTags();sets.push({name,text});localStorage.setItem('crossposterTagSets',JSON.stringify(sets));$('#tagName').value='';$('#tagText').value='';renderTags()};
-directMode();renderTags();renderYoutubeHistory();
+setDefaultSchedule();directMode();renderTags();renderYoutubeHistory();

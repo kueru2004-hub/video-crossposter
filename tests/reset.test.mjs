@@ -28,7 +28,9 @@ function setup(){
 }
 test('scheduled success clears all per-video state but preserves result, history and destination',async()=>{
   const s=setup();s.fill();await s.submit();
-  for(const id of ['#v','#t','#d','#yth','#ya','#tp'])assert.equal(s.node(id).value,'',id);
+  for(const id of ['#v','#t','#d','#yth','#tp'])assert.equal(s.node(id).value,'',id);
+  assert.match(s.node('#ya').value,/T18:30$/);
+  assert.ok(new Date(s.node('#ya').value)>new Date());
   assert.equal(s.node('#preview').src,undefined);assert.equal(s.node('#preview').hidden,true);
   assert.equal(s.node('#thumbnailFramePreview').cleared,true);
   assert.equal(s.node('#downloadThumbnailFrame').hidden,true);
