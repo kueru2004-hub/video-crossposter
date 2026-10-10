@@ -21,6 +21,7 @@ function downloadThumbnailFrame(){if(!selectedThumbnailFile)throw Error('先に�
 function localDateTimeValue(date){const pad=value=>String(value).padStart(2,'0');return date.getFullYear()+'-'+pad(date.getMonth()+1)+'-'+pad(date.getDate())+'T'+pad(date.getHours())+':'+pad(date.getMinutes())}
 function setScheduleToCurrentHour(){const date=new Date();date.setMinutes(30,0,0);$('#ya').value=localDateTimeValue(date)}
 function changeScheduleHour(amount){const input=$('#ya'),date=input.value?new Date(input.value):new Date();if(!input.value)date.setMinutes(30,0,0);date.setHours(date.getHours()+amount);input.value=localDateTimeValue(date)}
+function changeScheduleDay(amount){const input=$('#ya'),date=input.value?new Date(input.value):new Date();if(!input.value)date.setMinutes(30,0,0);date.setDate(date.getDate()+amount);input.value=localDateTimeValue(date)}
 function showYoutubeResult(url){const box=$('#youtubeResult'),link=$('#youtubeResultLink');link.href=url;link.textContent=url;box.hidden=false;$('#copyYoutubeNotice').textContent=''}
 async function copyText(text){try{await navigator.clipboard.writeText(text)}catch{const input=document.createElement('input');input.value=text;document.body.append(input);input.select();document.execCommand('copy');input.remove()}}
 async function copyYoutubeUrl(){await copyText($('#youtubeResultLink').href);$('#copyYoutubeNotice').textContent='コピーしました'}
@@ -39,6 +40,8 @@ $('#commercial').onchange=commercialMode;
 $('#ownBrand').onchange=commercialNotice;
 $('#branded').onchange=commercialNotice;
 $('#scheduleNow').onclick=setScheduleToCurrentHour;
+$('#scheduleDayUp').onclick=()=>changeScheduleDay(1);
+$('#scheduleDayDown').onclick=()=>changeScheduleDay(-1);
 $('#scheduleHourUp').onclick=()=>changeScheduleHour(1);
 $('#scheduleHourDown').onclick=()=>changeScheduleHour(-1);
 $('#copyYoutubeUrl').onclick=copyYoutubeUrl;

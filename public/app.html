@@ -56,6 +56,10 @@
           <span class="schedule-controls">
             <input id="ya" type="datetime-local">
             <button type="button" id="scheduleNow">現在時刻</button>
+            <span class="day-stepper" aria-label="予約日を1日単位で変更">
+              <button type="button" id="scheduleDayUp" aria-label="予約日を1日後にする">日付＋</button>
+              <button type="button" id="scheduleDayDown" aria-label="予約日を1日前にする">日付−</button>
+            </span>
             <span class="hour-stepper" aria-label="予約時刻を1時間単位で変更">
               <button type="button" id="scheduleHourUp" aria-label="1時間後">▲</button>
               <button type="button" id="scheduleHourDown" aria-label="1時間前">▼</button>
