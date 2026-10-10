@@ -1,4 +1,6 @@
-# Video Crossposter v1.2.14
+# Video Crossposter v1.2.15
+
+投稿先は初期状態でYouTubeだけを選択し、TikTokのチェックは外しています。
 
 YouTube予約日時の青い「日付＋」「日付−」ボタンで、時刻を保ったまま予約日を1日ずつ変更できます。月末・年末も翌月・翌年へ切り替わります。
 
